@@ -1,0 +1,13 @@
+# API Key —— 明文密钥，绝对不能提交
+settings.json
+
+# Claude Code 运行时生成 —— 不追踪
+*.log
+cache/
+sessions/
+file-history/
+history.jsonl
+shell-snapshots/
+tasks/
+telemetry/
+.last-cleanup
