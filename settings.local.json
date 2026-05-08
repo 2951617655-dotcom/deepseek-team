@@ -8,7 +8,7 @@
       "WebSearch",
       "WebFetch(domain:github.com)",
       "Bash(gh api *)",
-      "Bash(curl *)",
+      "Bash(curl(-s, -I, --version, --help))",
       "Bash(git clone *)",
       "Bash(npm pack *)",
       "Bash(npm view *)",
@@ -30,8 +30,7 @@
       "Bash(/c/Users/ppop/AppData/Local/Programs/Python/Python310/python.exe *)",
       "Bash(grep -iE '\\\\.\\(png|jpg|jpeg|gif|bmp\\)$')",
       "Bash(python -c \"from PIL import Image; print\\('PIL available'\\)\")",
-      "Bash(python *)",
-      "Bash(powershell.exe *)",
+      "Bash(python(-c, -m, --version))",
       "Bash(netstat -ano)",
       "Bash(tasklist)",
       "Bash(reg query *)",
@@ -48,7 +47,9 @@
       "Bash(cp \"/c/Users/ppop/.claude/agents/debugger.md\" \"/d/.claude/deepseek-team/agents/debugger-agent.md\")",
       "Bash(cp \"/c/Users/ppop/.claude/agents/code-reviewer.md\" \"/d/.claude/deepseek-team/agents/code-reviewer-agent.md\")",
       "Bash(cp \"/c/Users/ppop/.claude/agents/coder.md\" \"/d/.claude/deepseek-team/agents/coder-agent.md\")",
-      "Bash(cp \"/c/Users/ppop/.claude/agents/project-lead.md\" \"/d/.claude/deepseek-team/agents/project-lead-agent.md\")"
+      "Bash(cp \"/c/Users/ppop/.claude/agents/project-lead.md\" \"/d/.claude/deepseek-team/agents/project-lead-agent.md\")",
+      "Bash(setx ANTHROPIC_AUTH_TOKEN *)",
+      "Bash(setx OPENAI_API_KEY *)"
     ]
   }
 }
