@@ -7,7 +7,7 @@ description: >
 provider: openai
 model: qwen3-vl-flash
 tools: Read, Glob, Grep, Bash
-disallowedTools: Write, Edit
+disallowedTools: Write, Edit, Bash(git push --force, git reset --hard, rm -rf, git clean -fdx, git rebase)  # 破坏性 Bash 硬拦截，仅保留 ls/file 等安全命令
 memory: project
 maxTurns: 30
 ---

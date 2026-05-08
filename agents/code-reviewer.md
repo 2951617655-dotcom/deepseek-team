@@ -6,8 +6,7 @@ description: >
 # 经 CC Switch 映射至 DeepSeek v4-flash
 model: haiku
 tools: Read, Grep, Glob, Bash
-disallowedTools: Write, Edit
-# Bash 仅用于 git diff 和 git status，不执行写操作、不跑构建
+disallowedTools: Write, Edit, Bash(git push --force, git reset --hard, rm -rf, git clean -fdx, git rebase)  # Bash 仅用于 git diff/status，破坏性命令硬拦截
 memory: project
 maxTurns: 30
 ---

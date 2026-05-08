@@ -6,7 +6,7 @@ description: >
 # 经 CC Switch 映射至 DeepSeek v4-pro
 model: sonnet
 tools: Read, Glob, Grep, Bash, Write, Edit, AskUserQuestion
-disallowedTools: Bash(git push --force, git reset --hard, rm -rf)  # 禁止破坏性 Bash 操作
+disallowedTools: Bash(git push --force, git reset --hard, rm -rf, git clean -fdx, git rebase)  # 与 coder 对齐的破坏性 Bash 硬限制
 memory: project
 maxTurns: 80
 ---
