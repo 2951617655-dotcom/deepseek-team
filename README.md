@@ -108,6 +108,7 @@ deepseek-team/
 ├── README.md
 ├── settings.example.json   # API Key 配置模板（占位符）
 ├── CLAUDE.md.example       # 调度官行为配置示例
+├── 推广文档.md              # 项目介绍与设计理念
 └── agents/                 # 5 个 Agent 定义
     ├── boss-agent.md              # 调度官
     ├── project-lead-agent.md      # 项目负责人
@@ -135,6 +136,10 @@ deepseek-team/
 - [toby1123yjh/claude-code-cgg](https://github.com/toby1123yjh/claude-code-cgg) — CGG 多模型协作框架
 - [cc-workspace](https://github.com/VincentVanN/cc-workspace) — 多工作区编排参考
 
+## 关于作者
+
+在校大学生课余维护，更新随学期节奏波动。欢迎提 Issue 和意见。
+
 ## 许可
 
-MIT
+禁止商用。个人学习、研究、非商业用途自由使用。转载请注明出处。
