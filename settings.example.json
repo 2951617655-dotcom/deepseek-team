@@ -1,0 +1,17 @@
+{
+  "modelType": "anthropic",
+  "env": {
+    "ANTHROPIC_BASE_URL": "<DeepSeek API 端点或 CC Switch 地址>",
+    "ANTHROPIC_AUTH_TOKEN": "<DeepSeek API Key>",
+    "ANTHROPIC_MODEL": "deepseek-v4-pro",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-flash",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "deepseek-v4-pro",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "deepseek-v4-pro",
+    "ANTHROPIC_REASONING_MODEL": "deepseek-v4-pro",
+    "OPENAI_API_KEY": "<你的多模态API_KEY>",
+    "OPENAI_BASE_URL": "<多模态供应商BaseURL>",
+    "OPENAI_MODEL": "<多模态模型名>"
+  },
+  "theme": "auto",
+  "includeCoAuthoredBy": false
+}
