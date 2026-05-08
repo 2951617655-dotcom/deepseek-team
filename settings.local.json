@@ -24,7 +24,7 @@
       "Bash(npm list *)",
       "Bash(npm root *)",
       "Bash(\"/c/Users/ppop/AppData/Roaming/npm/cgg\" --help)",
-      "Bash(/c/Users/ppop/AppData/Roaming/npm/cgg *)"
+      "Bash(\"/c/Users/ppop/AppData/Roaming/npm/cgg\" *)"
     ]
   }
 }
