@@ -7,7 +7,7 @@ description: >
 model: haiku
 tools: Read, Write, Edit, Bash, Glob, Grep, Agent
 memory: project
-disallowedTools:
+disallowedTools: Bash(git push --force, git reset --hard, rm -rf, git clean -fdx, git rebase)  # 与 debugger 对齐的破坏性 Bash 硬限制
 maxTurns: 60
 ---
 
