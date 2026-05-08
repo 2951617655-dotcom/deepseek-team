@@ -118,9 +118,9 @@ Write-Host "[3/6] 部署文件..." -ForegroundColor Cyan
 $ClaudeDir = "$env:USERPROFILE\.claude"
 $AgentsDir = "$ClaudeDir\agents"
 
-if (-not (Test-Path $AgentsDir)) {
-    New-Item -ItemType Directory -Path $AgentsDir -Force | Out-Null
-}
+# 确保父目录存在（-Force 递归创建，但显式创建更清晰）
+New-Item -ItemType Directory -Path $ClaudeDir -Force | Out-Null
+New-Item -ItemType Directory -Path $AgentsDir -Force | Out-Null
 
 # 复制代理配置
 Copy-Item (Join-Path $ScriptDir "agents\*.md") -Destination $AgentsDir -Force
@@ -206,6 +206,7 @@ Write-Host "[5/6] 生成配置文件..." -ForegroundColor Cyan
 $settingsJson = @'
 {
   "env": {
+    "ANTHROPIC_AUTH_TOKEN": "",
     "ANTHROPIC_BASE_URL": "http://127.0.0.1:15721",
     "ANTHROPIC_MODEL": "deepseek-v4-pro",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-flash",

@@ -124,8 +124,10 @@ ok "5 个代理配置 → $AGENTS_DIR/"
 cp "$SCRIPT_DIR/CLAUDE.md" "$HOME/CLAUDE.md"
 ok "调度官规则 → $HOME/CLAUDE.md"
 
-# 复制 CLAUDE.md 到 .claude/（本地配置）
-cp "$SCRIPT_DIR/CLAUDE.md" "$CLAUDE_DIR/CLAUDE.md" 2>/dev/null || true
+# 复制 CLAUDE.md 到 .claude/（本地配置）—— 跳过自复制
+if [ "$SCRIPT_DIR/CLAUDE.md" != "$CLAUDE_DIR/CLAUDE.md" ]; then
+  cp "$SCRIPT_DIR/CLAUDE.md" "$CLAUDE_DIR/CLAUDE.md"
+fi
 
 # 复制权限白名单
 cp "$SCRIPT_DIR/settings.local.json" "$CLAUDE_DIR/settings.local.json"
@@ -192,6 +194,7 @@ echo -e "${CYAN}[5/6]${NC} 生成配置文件..."
 cat > "$CLAUDE_DIR/settings.json" << 'SETEOF'
 {
   "env": {
+    "ANTHROPIC_AUTH_TOKEN": "",
     "ANTHROPIC_BASE_URL": "http://127.0.0.1:15721",
     "ANTHROPIC_MODEL": "deepseek-v4-pro",
     "ANTHROPIC_DEFAULT_HAIKU_MODEL": "deepseek-v4-flash",

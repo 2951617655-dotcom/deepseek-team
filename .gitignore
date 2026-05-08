@@ -11,3 +11,10 @@ shell-snapshots/
 tasks/
 telemetry/
 .last-cleanup
+
+# 运行时目录 —— 缓存和会话数据，不追踪
+backups/
+plans/
+plugins/
+projects/
+skills/
