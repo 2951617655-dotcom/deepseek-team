@@ -61,26 +61,31 @@ User
 
 ### 安装
 
+**方式一：一键安装（推荐）**
+
 ```bash
-# 1. 克隆仓库
+# Windows PowerShell
 git clone https://github.com/2951617655-dotcom/deepseek-team.git
+cd deepseek-team
+powershell -ExecutionPolicy Bypass -File install.ps1
 
-# 2. 部署子代理（6 个）
-cp deepseek-team/agents/project-lead-agent.md ~/.claude/agents/
-cp deepseek-team/agents/coder-agent.md ~/.claude/agents/
-cp deepseek-team/agents/code-reviewer-agent.md ~/.claude/agents/
-cp deepseek-team/agents/debugger-agent.md ~/.claude/agents/
-cp deepseek-team/agents/visual-inspector.md ~/.claude/agents/
-cp deepseek-team/agents/task-schema.md ~/.claude/agents/
-
-# 3. 配置 API Key
-cp deepseek-team/settings.example.json ~/.claude/settings.json
-# 编辑 ~/.claude/settings.json，填入你的 DeepSeek 和多模态 API Key
-
-# 4. 加载调度官行为
-# 将 CLAUDE.md.example 的内容合并到你项目的 CLAUDE.md
-# 或放在 ~/CLAUDE.md 作为全局默认
+# Linux / macOS / Git Bash
+git clone https://github.com/2951617655-dotcom/deepseek-team.git
+cd deepseek-team
+bash install.sh
 ```
+
+脚本自动完成：创建目录 → 备份旧文件 → 安装 6 个 Agent + 调度官规则 → 放置 API 配置模板。已有配置文件不会被覆盖。
+
+**方式二：让 Claude Code 自己装**
+
+把仓库克隆下来，然后在 Claude Code 里说：
+
+> "帮我把 deepseek-team 装一下，install.ps1 在仓库根目录"
+
+Claude Code 会自动读取并执行安装脚本，全程不用你动手。
+
+**安装后只需做一件事**：编辑 `~/.claude/settings.json`，填入你的 API Key。然后 `cgg` 启动。
 
 ### 启动
 
@@ -116,7 +121,9 @@ cgg    # 注意：是 cgg，不是 claude
 ```
 deepseek-team/
 ├── README.md
-├── settings.example.json   # API Key 配置模板（占位符）
+├── install.ps1              # Windows 一键安装脚本
+├── install.sh               # Linux/macOS 一键安装脚本
+├── settings.example.json    # API Key 配置模板（占位符）
 ├── CLAUDE.md.example       # 调度官行为配置（含核心铁律、并行工作流、自定义角色、结构化任务单、澄清协议）
 ├── CHANGELOG.md            # 完整更新日志
 ├── 推广文档.md              # 项目介绍与设计理念
