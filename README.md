@@ -31,18 +31,22 @@ User
 
 | 层 | 角色 | 模型 | 供应商 | 职责 |
 |----|------|------|--------|------|
-| 顶层 | 调度官 | v4-pro | DeepSeek | 全局上下文理解、战略决策、质量终审 |
-| 中层 | 项目负责人 | v4-pro | DeepSeek | 需求细化、中文技术规格书输出 |
-| 中层 | 审核官 | v4-flash | DeepSeek | 代码质量检查，只看不改 |
-| 底层 | 码农 | v4-flash | DeepSeek | 接收规格书 → 编码 → 自测 → 报告 |
-| 底层 | 调试工程师 | v4-pro | DeepSeek | 复杂 bug 根因定位、最小修复方案 |
+| 顶层 | 调度官 | v4-pro | DeepSeek | 全局上下文理解、战略决策、质量终审、澄清消息循环路由 |
+| 中层 | 项目负责人 | v4-pro | DeepSeek | 需求细化、中文技术规格书输出、P3综合报告、澄清应答 |
+| 中层 | 审核官 | v4-flash | DeepSeek | 代码质量检查（可并行），只看不改 |
+| 底层 | 码农 | v4-flash | DeepSeek | 接收任务单 → 编码 → 自测 → 澄清请求 → 完成报告 |
+| 底层 | 调试工程师 | v4-pro | DeepSeek | 复杂 bug 根因定位、最小修复方案、安全/性能扫描 |
 | 专属 | **视觉审查官** | 千问/GPT/Claude/Gemini | 用户自选 | 截图/UI/架构图/PDF 分析 |
 
 ## 特性
 
 - **全中文交流** — 团队内部通信、用户交互、代码注释全部中文
 - **思维链透明** — 每个 Agent 的推理过程对用户可见，交流不黑盒
-- **五层团队** — 调度官 + 项目负责人 + 码农 + 审核官 + 调试工程师，职责清晰
+- **六层团队** — 调度官 + 项目负责人 + 码农 + 审核官 + 调试工程师 + 视觉审查官，职责清晰
+- **并行质检** — P2 质检阶段审核官、调试工程师、视觉审查官可同时启动，减少串行等待
+- **自定义角色** — 开发者可注册自定义角色（产品经理、安全审计员等），工作流适配更多场景
+- **结构化任务单** — 代理间用 Markdown 任务单（技术上下文+交付物+约束验收+澄清记录）替代纯文本，消除信息衰减
+- **澄清协议** — 子代理发现信息不足时主动发起澄清请求（≤2轮），拒绝硬猜产生不可用代码
 - **多模态视觉** — 视觉审查官独立走多模态模型，DeepSeek 看不见图也能分析截图
 - **消息分流** — 简单问答直接回复，代码任务启动团队，不互相阻塞
 - **模型分离** — v4-pro 负责"想"，v4-flash 负责"做"，多模态模型负责"看"
@@ -61,12 +65,13 @@ User
 # 1. 克隆仓库
 git clone https://github.com/2951617655-dotcom/deepseek-team.git
 
-# 2. 部署子代理（5 个）
+# 2. 部署子代理（6 个）
 cp deepseek-team/agents/project-lead-agent.md ~/.claude/agents/
 cp deepseek-team/agents/coder-agent.md ~/.claude/agents/
 cp deepseek-team/agents/code-reviewer-agent.md ~/.claude/agents/
 cp deepseek-team/agents/debugger-agent.md ~/.claude/agents/
 cp deepseek-team/agents/visual-inspector.md ~/.claude/agents/
+cp deepseek-team/agents/task-schema.md ~/.claude/agents/
 
 # 3. 配置 API Key
 cp deepseek-team/settings.example.json ~/.claude/settings.json
@@ -90,15 +95,20 @@ cgg    # 注意：是 cgg，不是 claude
 ```
 你：帮我看看这张截图 D:\bug.png
 调度官：[分流判断] 涉及图片 → 全团队模式 → 派视觉审查官
-视觉审查官：[分析截图] → 输出中文视觉报告
+视觉审查官：[解析任务单 → 自动获取截图路径] → 输出中文视觉报告
 调度官：[交付用户]
 
 你：帮我加一个用户登录功能
-调度官：[分流判断] 代码修改 → 全团队模式
-    → 派项目负责人 → 出规格书
-    → 派码农 → 编码自测
-    → 派审核官 → 审查
-    → 终审 → 交付用户
+调度官：[分流判断] 代码修改 → 全团队模式 → 派项目负责人
+项目负责人：[P0] → 出规格书 + 附带结构化任务单
+调度官：[P1] → 派码农（附任务单）
+码农：[解析任务单 → 编码 → 自检 → 输出完成报告]
+调度官：[P2 并行质检] → 审核官 + 调试工程师 + 视觉审查官 同时启动
+审核官：   [对照任务单约束逐项核对] → 审查报告
+调试工程师：[安全/性能扫描] → 扫描报告
+视觉审查官：[UI一致性检查] → 视觉报告
+调度官：[P3] → 回调项目负责人综合各方报告
+调度官：[P4] → 终审 → 交付用户
 ```
 
 ## 目录结构
@@ -107,15 +117,17 @@ cgg    # 注意：是 cgg，不是 claude
 deepseek-team/
 ├── README.md
 ├── settings.example.json   # API Key 配置模板（占位符）
-├── CLAUDE.md.example       # 调度官行为配置示例
+├── CLAUDE.md.example       # 调度官行为配置（含核心铁律、并行工作流、自定义角色、结构化任务单、澄清协议）
+├── CHANGELOG.md            # 完整更新日志
 ├── 推广文档.md              # 项目介绍与设计理念
-└── agents/                 # 5 个 Agent 定义
+└── agents/                 # 6 个 Agent 定义 + 1 个格式规范
     ├── boss-agent.md              # 调度官
-    ├── project-lead-agent.md      # 项目负责人
-    ├── code-reviewer-agent.md     # 审核官
-    ├── coder-agent.md             # 码农
-    ├── debugger-agent.md          # 调试工程师
-    └── visual-inspector.md        # 视觉审查官（多模态）
+    ├── project-lead-agent.md      # 项目负责人（含P3综合+澄清应答）
+    ├── code-reviewer-agent.md     # 审核官（支持并行质检）
+    ├── coder-agent.md             # 码农（含任务单解析+澄清请求+完成报告）
+    ├── debugger-agent.md          # 调试工程师（含安全/性能扫描+调试澄清）
+    ├── visual-inspector.md        # 视觉审查官（多模态）
+    └── task-schema.md             # 结构化任务单格式规范（新增）
 ```
 
 ## 语言锚定技术
