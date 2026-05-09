@@ -1,6 +1,24 @@
 # DeepSeek 虚拟开发团队 for Claude Code
 
-> 一个融合多模型的五层 AI 开发团队。调度官统筹全局（DeepSeek），视觉审查官看图（千问/Claude/GPT 任选），项目负责人细化需求，码农写代码，审核官检查质量，调试工程师定位 bug。全中文交流，思维链透明。
+> 一个融合多模型的六层 AI 开发团队。全中文交流，思维链透明。
+
+## 闪电安装（零操作）
+
+**把下面这行地址发给 Claude Code，然后说"帮我安装这个团队"，剩下的 AI 全自动搞定：**
+
+```
+https://github.com/2951617655-dotcom/deepseek-team
+```
+
+Claude Code 会自动执行：
+1. `git clone` 仓库
+2. 运行 `install.ps1`（Windows）或 `install.sh`（Linux/Mac）
+3. 安装完成后，编辑 `~/.claude/settings.json` 填入你的 API Key
+4. 输入 `cgg` 启动，说一句"你好指挥官"激活团队
+
+> 已有配置不会被覆盖。安装脚本自动备份旧文件。
+
+---
 
 ## 架构
 
@@ -53,39 +71,19 @@ User
 
 ## 快速开始
 
-### 前提
+### 前置条件
 
-- **Claude Code CGG**（必须）：`npm install -g claude-code-cgg`
-- DeepSeek API（或其他 Anthropic 兼容端点）
-- 一个多模态 API Key（视觉审查官需要）：支持阿里百炼千问 / OpenAI GPT / Anthropic Claude / Google Gemini
+- **Claude Code CGG**：`npm install -g claude-code-cgg`
+- DeepSeek API Key
+- 一个多模态 API Key（视觉审查官用，可选）
 
 ### 安装
 
-**方式一：一键安装（推荐）**
+见顶部「闪电安装」——把仓库地址发给 Claude Code，一切自动完成。
 
-```bash
-# Windows PowerShell
-git clone https://github.com/2951617655-dotcom/deepseek-team.git
-cd deepseek-team
-powershell -ExecutionPolicy Bypass -File install.ps1
+如果偏好手动安装，克隆后运行 `install.ps1`（Windows）或 `install.sh`（Linux/Mac）即可。
 
-# Linux / macOS / Git Bash
-git clone https://github.com/2951617655-dotcom/deepseek-team.git
-cd deepseek-team
-bash install.sh
-```
-
-脚本自动完成：创建目录 → 备份旧文件 → 安装 6 个 Agent + 调度官规则 → 放置 API 配置模板。已有配置文件不会被覆盖。
-
-**方式二：让 Claude Code 自己装**
-
-把仓库克隆下来，然后在 Claude Code 里说：
-
-> "帮我把 deepseek-team 装一下，install.ps1 在仓库根目录"
-
-Claude Code 会自动读取并执行安装脚本，全程不用你动手。
-
-**安装后只需做一件事**：编辑 `~/.claude/settings.json`，填入你的 API Key。然后 `cgg` 启动。
+安装后编辑 `~/.claude/settings.json` 填入 API Key，然后 `cgg` 启动，说一句"你好指挥官"。
 
 ### 启动
 
@@ -121,7 +119,8 @@ cgg    # 注意：是 cgg，不是 claude
 ```
 deepseek-team/
 ├── README.md
-├── install.ps1              # Windows 一键安装脚本
+├── SKILL.md                  # CC 自动发现：安装 skill
+├── install.ps1               # Windows 一键安装脚本
 ├── install.sh               # Linux/macOS 一键安装脚本
 ├── settings.example.json    # API Key 配置模板（占位符）
 ├── CLAUDE.md.example       # 调度官行为配置（含核心铁律、并行工作流、自定义角色、结构化任务单、澄清协议）
