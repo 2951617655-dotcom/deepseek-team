@@ -18,10 +18,10 @@ maxTurns: 1
 
 ### 1.1 JSON 信封
 
-5 字段极简格式，一行，紧贴在 `## 任务单` 标题之前或紧随其后（建议放在标题下一行）：
+6 字段极简格式，一行，紧贴在 `## 任务单` 标题之前或紧随其后（建议放在标题下一行）：
 
 ```json
-{"task_id":"task-YYYYMMDD-NNN","from":"角色名","to":"角色名","clarification_rounds":0,"status":"pending"}
+{"task_id":"task-YYYYMMDD-NNN","from":"角色名","to":"角色名","clarification_rounds":0,"status":"pending","depends_on":[]}
 ```
 
 | 字段 | 类型 | 说明 |
@@ -31,6 +31,7 @@ maxTurns: 1
 | `to` | string | 执行者角色名，如"码农"、"审核官" |
 | `clarification_rounds` | number | 已使用的澄清轮次，初始为 0，最大 2 |
 | `status` | string | 任务状态：`pending` / `in-progress` / `done` / `blocked` |
+| `depends_on` | string[] | 依赖的任务ID列表，如 ["task-20260510-001"]。调度官据此编排DAG执行顺序 |
 
 ### 1.2 Markdown 主体
 
@@ -43,6 +44,7 @@ maxTurns: 1
 | 执行者 | [角色名] |
 | 澄清轮次 | 0/2 |
 | 状态 | pending |
+| 依赖任务 | [task_id列表或"无"] |
 
 ### 技术上下文
 - [环境信息：语言/框架/数据库等，按实际填写，无则省略该行]
