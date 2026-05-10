@@ -14,7 +14,7 @@ Claude Code 会自动执行：
 1. `git clone` 仓库
 2. 运行 `install.ps1`（Windows）或 `install.sh`（Linux/Mac）
 3. 安装完成后，编辑 `~/.claude/settings.json` 填入你的 API Key
-4. 输入 `cgg` 启动，说一句"你好指挥官"激活团队
+4. 启动 Claude Code，说一句"你好指挥官"激活团队
 
 > 已有配置不会被覆盖。安装脚本自动备份旧文件。
 
@@ -75,7 +75,7 @@ User
 
 ### 前置条件
 
-- **Claude Code CGG**：`npm install -g claude-code-cgg`（多模型协作框架，用于启动调度官）
+- **Claude Code**：需已安装并配置好 DeepSeek API
 - DeepSeek API Key
 - 视觉审查官：依赖 [vision.js](https://github.com/asuojun/claude-vision-skill) CLI 脚本，需配置百炼 API Key（详见安装后说明）
 
@@ -85,12 +85,12 @@ User
 
 如果偏好手动安装，克隆后运行 `install.ps1`（Windows）或 `install.sh`（Linux/Mac）即可。
 
-安装后编辑 `~/.claude/settings.json` 填入 API Key，然后 `cgg` 启动，说一句"你好指挥官"。
+安装后编辑 `~/.claude/settings.json` 填入 API Key，然后启动 Claude Code，说一句"你好指挥官"。
 
 ### 启动
 
 ```bash
-cgg    # 注意：是 cgg，不是 claude
+claude
 ```
 
 首次启动后，确保 `vision.js` 已配置百炼 API Key（脚本中 `DASHSCOPE_API_KEY` 变量）。视觉审查官收到图片时会自动调用 `node vision.js` 识图。
@@ -156,7 +156,7 @@ deepseek-team/
 
 - [fkyah3/opencode-yg](https://github.com/fkyah3/opencode-yg) — 语言锚定研究，中文 AI Agent 方法论
 - [asuojun/claude-vision-skill](https://github.com/asuojun/claude-vision-skill) — vision.js CLI 识图脚本，视觉审查官的核心依赖
-- [toby1123yjh/claude-code-cgg](https://github.com/toby1123yjh/claude-code-cgg) — CGG 多模型协作框架（本项目的调度官多模型路由基础）
+- [toby1123yjh/claude-code-cgg](https://github.com/toby1123yjh/claude-code-cgg) — CGG 多模型协作框架（早期版本依赖，现已移除）
 - [cc-workspace](https://github.com/VincentVanN/cc-workspace) — 多工作区编排参考
 
 ## 关于作者
