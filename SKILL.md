@@ -48,12 +48,15 @@ bash install.sh
 
 > 安装完成！接下来：
 > 1. 编辑 `~/.claude/settings.json`，把占位符换成你的 API Key
-> 2. 终端输入 `cgg` 启动
+> 2. 终端输入 `claude` 启动
 > 3. 说一句"你好指挥官"，团队激活
 
-### 4. 如果 settings.json 已存在
+### 4. 视觉审查官配置
 
-不要覆盖已有配置。单独提醒用户检查 settings.json 是否包含多模态 API Key（OPENAI_API_KEY / OPENAI_BASE_URL / OPENAI_MODEL），缺少则手动补充。
+视觉审查官依赖 vision.js CLI 脚本识图。引导用户：
+- 克隆 [claude-vision-skill](https://github.com/asuojun/claude-vision-skill) 仓库
+- 将 vision.js 放到用户目录，编辑填入百炼 API Key 和模型名 (qwen3.5-omni-plus)
+- 详见 README 前置条件章节
 
 ## 验证安装
 

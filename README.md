@@ -56,7 +56,7 @@ User
 | 底层 | 码农（双手） | v4-flash | DeepSeek | 接收大脑 Edit 指令 → 逐条执行 → 自检 → 报告。不自行分析代码 |
 | 底层 | 调试工程师 | v4-pro | DeepSeek | 复杂 bug 根因定位、最小修复方案、安全/性能扫描 |
 | 底层 | 测试工程师 | v4-pro | DeepSeek | 功能正确性验证，TDD/事后补测，单元/集成/E2E/性能，覆盖率报告 |
-| 专属 | **视觉审查官** | vision.js + 百炼 API | qwen3.5-omni-plus | 截图/UI/架构图/PDF 分析（CLI 识图） |
+| 专属 | **视觉审查官** | qwen3.5-omni-plus | 阿里云百炼 (vision.js CLI) | 截图/UI/架构图/PDF 分析（CLI 识图） |
 
 ## 特性
 
