@@ -35,8 +35,8 @@ User
    ▼       ▼        ▼        ▼
 ┌──────┐ ┌──────┐ ┌──────┐ ┌──────────────┐ ┌──────────────┐
 │ 项目  │ │大脑  │ │审核官│ │调试工程师     │ │ 视觉审查官    │
-│负责人 │ │v4-pro│ │v4-flash│ │ v4-pro        │ │ 千问/GPT/    │
-│v4-pro│ │ 分析  │ │ 质检  │ │ 定位+最小修复 │ │ Claude/Gemini │
+│负责人 │ │v4-pro│ │v4-flash│ │ v4-pro        │ │vision.js+    │
+│v4-pro│ │ 分析  │ │ 质检  │ │ 定位+最小修复 │ │百炼API 识图  │
 │ 军师  │ └──┬───┘ └──────┘ └──────────────┘ └──────────────┘
 └──────┘    │
         ▼
@@ -56,7 +56,7 @@ User
 | 底层 | 码农（双手） | v4-flash | DeepSeek | 接收大脑 Edit 指令 → 逐条执行 → 自检 → 报告。不自行分析代码 |
 | 底层 | 调试工程师 | v4-pro | DeepSeek | 复杂 bug 根因定位、最小修复方案、安全/性能扫描 |
 | 底层 | 测试工程师 | v4-pro | DeepSeek | 功能正确性验证，TDD/事后补测，单元/集成/E2E/性能，覆盖率报告 |
-| 专属 | **视觉审查官** | 千问/GPT/Claude/Gemini | 用户自选 | 截图/UI/架构图/PDF 分析 |
+| 专属 | **视觉审查官** | vision.js + 百炼 API | qwen3.5-omni-plus | 截图/UI/架构图/PDF 分析（CLI 识图） |
 
 ## 特性
 
@@ -68,16 +68,16 @@ User
 - **自定义角色** — 开发者可注册自定义角色，工作流适配更多场景
 - **结构化任务单** — Markdown 任务单 + JSON 信封 + DAG 编排(depends_on)，消除代理间信息衰减
 - **澄清协议** — 子代理信息不足时主动发起澄清（≤2轮），拒绝硬猜
-- **多模态视觉** — 视觉审查官独立走多模态模型，DeepSeek 看不见图也能分析截图
+- **多模态视觉** — 视觉审查官通过 vision.js CLI 调用百炼 API (qwen3.5-omni-plus) 识图，DeepSeek 看不见图也能分析截图
 - **消息分流** — 简单问答直接回复，代码任务启动团队，不互相阻塞
 
 ## 快速开始
 
 ### 前置条件
 
-- **Claude Code CGG**：`npm install -g claude-code-cgg`
+- **Claude Code CGG**：`npm install -g claude-code-cgg`（多模型协作框架，用于启动调度官）
 - DeepSeek API Key
-- 一个多模态 API Key（视觉审查官用，可选）
+- 视觉审查官：依赖 [vision.js](https://github.com/asuojun/claude-vision-skill) CLI 脚本，需配置百炼 API Key（详见安装后说明）
 
 ### 安装
 
@@ -93,14 +93,14 @@ User
 cgg    # 注意：是 cgg，不是 claude
 ```
 
-首次启动后，调度官会自动询问你的多模态 API 配置（Key、模型名）。提供后自动写入配置，后续无需重复。
+首次启动后，确保 `vision.js` 已配置百炼 API Key（脚本中 `DASHSCOPE_API_KEY` 变量）。视觉审查官收到图片时会自动调用 `node vision.js` 识图。
 
 ### 使用
 
 ```
 你：帮我看看这张截图 D:\bug.png
 调度官：[分流判断] 涉及图片 → 全团队模式 → 派视觉审查官
-视觉审查官：[解析任务单 → 自动获取截图路径] → 输出中文视觉报告
+视觉审查官：[解析任务单 → Bash 调用 vision.js 识图 → 获取文字描述] → 输出中文视觉报告
 调度官：[交付用户]
 
 你：帮我加一个用户登录功能
@@ -155,7 +155,8 @@ deepseek-team/
 ## 相关项目
 
 - [fkyah3/opencode-yg](https://github.com/fkyah3/opencode-yg) — 语言锚定研究，中文 AI Agent 方法论
-- [toby1123yjh/claude-code-cgg](https://github.com/toby1123yjh/claude-code-cgg) — CGG 多模型协作框架
+- [asuojun/claude-vision-skill](https://github.com/asuojun/claude-vision-skill) — vision.js CLI 识图脚本，视觉审查官的核心依赖
+- [toby1123yjh/claude-code-cgg](https://github.com/toby1123yjh/claude-code-cgg) — CGG 多模型协作框架（本项目的调度官多模型路由基础）
 - [cc-workspace](https://github.com/VincentVanN/cc-workspace) — 多工作区编排参考
 
 ## 关于作者
